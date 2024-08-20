@@ -87,10 +87,11 @@ to copy it into our client host. It will be necessary to modify the ``server`` s
 ```bash
     sed -i 's/server: https:\/\/127.0.0.1:6443/server: https:\/\/your-lb-ip:6443/' ./kubeconfig
 ```
-
-
+Now you can run some test againt the cluster with (or without) ``make test``.
 
 ### Wordpress deployment
 
+We will use the bitnami helm chart to install the wordpress appli on the cluster. Just touch the target with ``make wp``.
+The ``wordpress-value.yaml`` file will be used for customize our deployment.
 
-kubectl get pods
+¡Enjoy!
