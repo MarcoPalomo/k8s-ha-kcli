@@ -94,4 +94,10 @@ Now you can run some test againt the cluster with (or without) ``make test``.
 We will use the bitnami helm chart to install the wordpress appli on the cluster. Just touch the target with ``make wp``.
 The ``wordpress-value.yaml`` file will be used for customize our deployment.
 
-¡Enjoy!
+:warning: This is not production ready, because it lacks security. We need : 
+
+* A proper role-based access control (RBAC).
+* Using individual user certificates (rather than sharing the admin kubeconfig!!)
+* Implement network policies to restrict API server access.
+
+But... ¡Enjoy!
