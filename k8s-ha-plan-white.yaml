@@ -1,0 +1,80 @@
+parameters:
+   template: ubuntu2204
+   image: ubuntu2204
+   image_url: https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img
+   ssh_key: ~/.ssh/id_rsa.pub
+   domain: k8s.local
+   network: default
+   pool: default
+   numcpus: 2
+   memory: 4096
+   disk_size: 10
+   uefi: true
+
+net-cp:
+ type: network
+ cidr: 192.168.50.0/24
+ dhcp: False
+ nat: False
+
+net-workers:
+ type: network
+ cidr: 192.168.150.0/24
+ dhcp: False   
+   
+k8s-masters:
+   type: profile
+   image: ubuntu2204
+   ssh_key: ~/.ssh/id_rsa.pub
+   numcpus: 2
+   memory: 4096
+   uefi: true
+   nets:
+    - name: net-cp
+   disks:
+    - size: 10
+   pool: default
+   scripts:
+   - scripts/setup_control_plane.sh
+   
+k8s-workers:
+   type: profile
+   image: ubuntu2204
+   ssh_key: ~/.ssh/id_rsa.pub
+   numcpus: 2
+   memory: 1024
+   uefi: true
+   nets:
+    - name: net-workers
+   disks:
+    - size: 10
+   pool: default
+   scripts:
+   - scripts/setup_worker_node.sh
+
+master1:
+   profile: k8s-masters
+   
+master2:
+   profile: k8s-masters
+   
+master3:
+   profile: k8s-masters
+   
+worker1:
+   profile: k8s-workers
+   
+worker2:
+   profile: k8s-workers
+   
+worker3:
+   profile: k8s-workers
+
+loadbalancer:
+   image: ubuntu2204
+   memory: 512
+   numcpus: 1
+   disks:
+    - size: 10
+   nets:
+    - name: default

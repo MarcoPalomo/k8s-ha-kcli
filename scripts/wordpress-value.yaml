@@ -1,0 +1,127 @@
+# WordPress configuration
+wordpressUsername: admin
+wordpressPassword: "your_secure_password"
+wordpressEmail: "your_email@whitestack.com"
+wordpressBlogName: "My Advanced WordPress Blog"
+
+# Database configuration
+mariadb:
+  auth:
+    rootPassword: "your_secure_root_password"
+    password: "your_secure_db_password"
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "your_storage_class"
+      size: 8Gi
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClass: "your_storage_class"
+  size: 10Gi
+
+# Service configuration
+service:
+  type: LoadBalancer
+  port: 80
+  httpsPort: 443
+
+# Ingress configuration (if using)
+ingress:
+  enabled: true
+  hostname: your-wordpress-domain.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  tls: true
+
+# Resource limits
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Autoscaling
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# Service Account
+serviceAccount:
+  create: true
+  name: "wordpress-sa"
+  annotations: {}
+
+# Secrets
+externalDatabase:
+  exists: false
+  # If you have an external secret for database credentials:
+  # exists: true
+  # secretName: wordpress-external-db-secret
+
+extraEnvVars:
+  - name: WP_CACHE
+    value: "true"
+  - name: WP_DEBUG
+    value: "false"
+
+# ConfigMaps
+configMaps:
+  wp-config:
+    data:
+      wp-config.php: |
+        <?php
+        define('WP_DEBUG', false);
+        define('WP_CACHE', true);
+        define('WP_MEMORY_LIMIT', '256M');
+        /* That's all, stop editing! Happy blogging. */
+        ?>
+
+# Extra volumes and mounts (for custom themes/plugins)
+extraVolumes:
+  - name: custom-themes
+    emptyDir: {}
+extraVolumeMounts:
+  - name: custom-themes
+    mountPath: /bitnami/wordpress/wp-content/themes/custom-theme
+
+# Security context
+securityContext:
+  enabled: true
+  fsGroup: 1001
+  runAsUser: 1001
+
+# Metrics (if using Prometheus)
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+
+# Backups (example using Velero)
+backup:
+  enabled: true
+  schedule: "0 1 * * *"
+  includeClusterResources: null
+  storageLocation: default
+  volumeSnapshotLocation: default
+
+# PHP configuration
+php:
+  ini:
+    memory_limit: 256M
+    max_execution_time: 120
+
+# SMTP configuration for sending emails
+smtp:
+  enabled: true
+  host: "smtp.example.com"
+  port: 587
+  user: "your_smtp_user"
+  password: "your_smtp_password"
+  protocol: "tls"
