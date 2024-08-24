@@ -31,6 +31,8 @@ k8s-masters:
    uefi: true
    nets:
     - name: net-cp
+
+   
    disks:
     - size: 10
    pool: default
@@ -42,7 +44,7 @@ k8s-workers:
    image: ubuntu2204
    ssh_key: ~/.ssh/id_rsa.pub
    numcpus: 2
-   memory: 1024
+   memory: 4096
    uefi: true
    nets:
     - name: net-workers

@@ -22,7 +22,7 @@ systemctl enable kubelet
 systemctl start kubelet
 
 # Pull necessary Kubernetes images
-kubeadm config images pull
+sudo kubeadm config images pull
 
 # Set up the firewall (if needed)
 # ufw allow 6443/tcp
@@ -40,8 +40,12 @@ echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -p
 
 # Load necessary kernel modules
+mkdir -p /etc/containerd
+touch /etc/containerd/config.toml
+containerd config default > /etc/containerd/config.toml
 modprobe br_netfilter
 echo "br_netfilter" >> /etc/modules-load.d/k8s.conf
+sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/' /etc/containerd/config.toml
 
 # Helm cli to install
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
