@@ -1,0 +1,5 @@
+apiVersion: v2
+name: wordpress-nfs
+description: WhiteStack's Helm chart for WordPress with NFS persistence
+version: 0.1.0
+appVersion: "5.9.0"

@@ -1,0 +1,44 @@
+wordpress:
+  image:
+    repository: wordpress
+    tag: 5.9-apache
+  daemonset:
+    nodeSelector: {}
+    tolerations: []
+  persistence:
+    enabled: true
+    storageClass: "openebs-rwx"
+    accessMode: ReadWriteMany
+    size: 10Gi
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: true
+    hosts:
+      - host: wordpress.local
+        paths: ["/"]
+
+mariadb:
+  image:
+    repository: mariadb
+    tag: 10.6
+  persistence:
+    enabled: true
+    storageClass: "openebs-rwx"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  service:
+    port: 3306
+
+# Maybe this, if it's a shared by many pods
+# storage:
+#   sharedMedia:
+#     nfs:
+#       path: "/wordpress"
+#       server: "192.168.122.253"
+
+# another way to do it
+nfs:
+  server: "192.168.122.253"
+  path: "/wordpress"

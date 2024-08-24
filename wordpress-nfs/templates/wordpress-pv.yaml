@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-wordpress-pv
+spec:
+  capacity:
+    storage: {{ .Values.wordpress.persistence.size }}
+  accessModes:
+    - {{ .Values.wordpress.persistence.accessMode | quote }}
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Values.wordpress.persistence.storageClass | quote }}
+  nfs:
+    server: {{ .Values.nfs.server }}
+    path: "{{ .Values.nfs.path }}/wordpress"
