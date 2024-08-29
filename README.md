@@ -1,4 +1,4 @@
-# highly available kubernetes cluster for ``whitestack.com``
+# highly available kubernetes cluster for ``niceAmbien.com``
 
 ###### TODO: two LB to gain more availability
 ###### TODO for the DAY-2 ops: replace the Makefile and automate it completely with CICD (gitops way)

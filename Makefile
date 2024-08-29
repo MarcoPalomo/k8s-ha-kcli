@@ -94,7 +94,7 @@ test: generate-kubeconfig
 # Wordpress deployment
 wp:
 	@echo "Starting the deployment of Wordpress" 
-	@helm install my-wp ./wordpress-nfs -f wordpress-nfs/values.yaml -n whitestack --create-namespace
+	@helm install my-wp ./wordpress-nfs -f wordpress-nfs/values.yaml -n niceAmbien --create-namespace
 
 # Help
 help:
