@@ -1,3 +1,5 @@
+# TODO prometheus metrics
+
 wordpress:
   image:
     repository: wordpress

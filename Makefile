@@ -6,7 +6,6 @@ PIP := pip3
 CONTROL_PLANE_NODES :=192.168.122.128#192.168.122.180 192.168.122.130
 WORKER_NODES := 192.168.122.29#192.168.122.32 192.168.122.204
 # Same for loadbalancer IP value
-# Due to a lab on my laptop, I have under dimensioned my nodes and only put a LB. Another one is preffered to gaine more HA
 LOAD_BALANCER := 192.168.122.26
 API_SERVER_IP := 192.168.122.128
 KUBECONFIG_PATH := ~/.kube/config
